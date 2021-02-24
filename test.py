@@ -30,6 +30,6 @@ def test(cmd, name):
 
 
 test("uci = my_engine.UCI(test_engine)", "Create UCI")
-test("uci.evaluate_uci(\"isready\")", "isready")
+test("my_engine.UCI(test_engine).evaluate_uci(\"isready\")", "isready")
 
 sys.exit(err_code)
