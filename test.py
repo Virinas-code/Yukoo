@@ -22,7 +22,7 @@ except Exception as exception:
 def test(cmd, name):
     global err_code
     try:
-        eval(cmd)
+        exec(cmd)
         print(f"✅ {name}")
     except Exception as exception:
         print(f"❎ {name} : {exception}")
