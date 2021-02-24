@@ -18,7 +18,9 @@ except Exception as exception:
     print(f"❎ EngineBase : {exception}")
     err_code -= 1
 
+
 def test(cmd, name):
+    global err_code
     try:
         exec(cmd)
         print(f"✅ {name}")
@@ -26,6 +28,8 @@ def test(cmd, name):
         print(f"❎ {name} : {exception}")
         err_code -= 1
 
+
 test("print(\"hi\")", "Test of test ☺")
+test("print(test_engine)", "Test of test ☺")
 
 sys.exit(err_code)
