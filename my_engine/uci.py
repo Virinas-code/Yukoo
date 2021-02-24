@@ -31,31 +31,31 @@ class UCI:
         print(dir(chess.Piece(chess.PAWN, chess.BLACK)))
         while self.inner[0] != "quit":
             self.inner = input()
-            self.inner = self.inner.split(" ")
-            self.evaluate_uci()
+            self.evaluate_uci(self.inner)
         self.debug_file.close()
 
-    def evaluate_uci(self):
+    def evaluate_uci(self, inner):
         """Evaluate UCI command."""
-        if self.inner[0] == "uci":
+        inner = self.inner.split(" ")
+        if inner[0] == "uci":
             self.uci()
-        elif self.inner[0] == "debug" and len(self.inner) > 1:
+        elif inner[0] == "debug" and len(self.inner) > 1:
             self.debug(self.inner[1])
-        elif self.inner[0] == "quit":
+        elif inner[0] == "quit":
             if self.debug_state:
                 self.debug_log("quit")
-        elif self.inner[0] == "isready":
+        elif inner[0] == "isready":
             print("readyok")
-        elif self.inner[0] == "ucinewgame":
+        elif inner[0] == "ucinewgame":
             self.board = chess.Board(fen="rnbqkbnr/pppppppp/8/8/8/8/P"
                                          + "PPPPPPP/RNBQKBNR w KQkq - 0 1")
-        elif self.inner[0] == "display":
+        elif inner[0] == "display":
             print(self.board)
-        elif self.inner[0] == "display-engine":
+        elif inner[0] == "display-engine":
             print(self.engine.board)
-        elif self.inner[0] == "position":
+        elif inner[0] == "position":
             self.position(self.inner[1:])
-        elif self.inner[0] == "go":
+        elif inner[0] == "go":
             self.go(self.inner[1:])
         else:
             print("Unknow command: " + " ".join(self.inner))
