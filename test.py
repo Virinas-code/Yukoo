@@ -18,4 +18,14 @@ except Exception as exception:
     print(f"❎ EngineBase : {exception}")
     err_code -= 1
 
+def test(cmd, name):
+    try:
+        exec(cmd)
+        print(f"✅ {name}")
+    except Exception as exception:
+        print(f"❎ {name} : {exception}")
+        err_code -= 1
+
+test("print(\"hi\")", "Test of test ☺")
+
 sys.exit(err_code)
