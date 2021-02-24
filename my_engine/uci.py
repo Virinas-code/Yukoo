@@ -36,7 +36,7 @@ class UCI:
 
     def evaluate_uci(self, inner):
         """Evaluate UCI command."""
-        inner = self.inner.split(" ")
+        inner = inner.split(" ")
         if inner[0] == "uci":
             self.uci()
         elif inner[0] == "debug" and len(self.inner) > 1:
