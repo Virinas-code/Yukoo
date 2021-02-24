@@ -29,7 +29,6 @@ def test(cmd, name):
         err_code -= 1
 
 
-test("print(\"hi\")", "Test of test ☺")
-test("print(test_engine)", "Test of test ☺")
+test("test_engine.evaluate_uci(\"isready\")", "isready")
 
 sys.exit(err_code)
