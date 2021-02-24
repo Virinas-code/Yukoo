@@ -32,32 +32,36 @@ class UCI:
         while self.inner[0] != "quit":
             self.inner = input()
             self.inner = self.inner.split(" ")
-            if self.inner[0] == "uci":
-                self.uci()
-            elif self.inner[0] == "debug" and len(self.inner) > 1:
-                self.debug(self.inner[1])
-            elif self.inner[0] == "quit":
-                if self.debug_state:
-                    self.debug_log("quit")
-            elif self.inner[0] == "isready":
-                print("readyok")
-            elif self.inner[0] == "ucinewgame":
-                self.board = chess.Board(fen="rnbqkbnr/pppppppp/8/8/8/8/P"
-                                             + "PPPPPPP/RNBQKBNR w KQkq - 0 1")
-            elif self.inner[0] == "display":
-                print(self.board)
-            elif self.inner[0] == "display-engine":
-                print(self.engine.board)
-            elif self.inner[0] == "position":
-                self.position(self.inner[1:])
-            elif self.inner[0] == "go":
-                self.go(self.inner[1:])
-            else:
-                print("Unknow command: " + " ".join(self.inner))
-                if self.debug_state:
-                    self.debug_log("Unknow command: "
-                                   + ' '.join(self.inner))
+            self.evaluate_uci()
         self.debug_file.close()
+
+    def evaluate_uci(self):
+        """Evaluate UCI command."""
+        if self.inner[0] == "uci":
+            self.uci()
+        elif self.inner[0] == "debug" and len(self.inner) > 1:
+            self.debug(self.inner[1])
+        elif self.inner[0] == "quit":
+            if self.debug_state:
+                self.debug_log("quit")
+        elif self.inner[0] == "isready":
+            print("readyok")
+        elif self.inner[0] == "ucinewgame":
+            self.board = chess.Board(fen="rnbqkbnr/pppppppp/8/8/8/8/P"
+                                         + "PPPPPPP/RNBQKBNR w KQkq - 0 1")
+        elif self.inner[0] == "display":
+            print(self.board)
+        elif self.inner[0] == "display-engine":
+            print(self.engine.board)
+        elif self.inner[0] == "position":
+            self.position(self.inner[1:])
+        elif self.inner[0] == "go":
+            self.go(self.inner[1:])
+        else:
+            print("Unknow command: " + " ".join(self.inner))
+            if self.debug_state:
+                self.debug_log("Unknow command: "
+                               + ' '.join(self.inner))
 
     def uci(self):
         """UCI uci command."""
