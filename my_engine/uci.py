@@ -1,0 +1,122 @@
+# -*- coding: utf-8 -*-
+#!/usr/bin/env python3
+"""
+MyEngine.
+
+UCI System
+"""
+import time
+import sys
+import chess
+
+
+class UCI:
+    """MyEngine UCI System."""
+
+    def __init__(self, engine):
+        """UCI Main."""
+        self.engine = engine
+        if self.engine.name == "MyEngine":
+            print("UCI Connected")
+        else:
+            print("MyEngine UCI Control for " + repr(engine))
+            self.inner = [" "]
+            self.debug_state = False
+            self.debug_file = sys.stderr
+            self.board = chess.Board(fen="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/"
+                                         + "RNBQKBNR w KQkq - 0 1")
+
+    def run(self):
+        """Run loop."""
+        print(dir(chess.Piece(chess.PAWN, chess.BLACK)))
+        while self.inner[0] != "quit":
+            self.inner = input()
+            self.inner = self.inner.split(" ")
+            if self.inner[0] == "uci":
+                self.uci()
+            elif self.inner[0] == "debug" and len(self.inner) > 1:
+                self.debug(self.inner[1])
+            elif self.inner[0] == "quit":
+                if self.debug_state:
+                    self.debug_log("quit")
+            elif self.inner[0] == "isready":
+                print("readyok")
+            elif self.inner[0] == "ucinewgame":
+                self.board = chess.Board(fen="rnbqkbnr/pppppppp/8/8/8/8/P"
+                                             + "PPPPPPP/RNBQKBNR w KQkq - 0 1")
+            elif self.inner[0] == "display":
+                print(self.board)
+            elif self.inner[0] == "display-engine":
+                print(self.engine.board)
+            elif self.inner[0] == "position":
+                self.position(self.inner[1:])
+            elif self.inner[0] == "go":
+                self.go(self.inner[1:])
+            else:
+                print("Unknow command: " + " ".join(self.inner))
+                if self.debug_state:
+                    self.debug_log("Unknow command: "
+                                   + ' '.join(self.inner))
+        self.debug_file.close()
+
+    def uci(self):
+        """UCI uci command."""
+        if self.debug_state:
+            self.debug_log("uci")
+        print("id name " + self.engine.name)
+        print("id author " + self.engine.author)
+        print()
+        print("uciok")
+
+    def debug(self, mode):
+        """UCI debug command."""
+        if mode == "on":
+            self.debug_state = True
+            try:
+                self.debug_file = open("uci.log", 'x')
+            except FileExistsError:
+                self.debug_file = open("uci.log", 'w')
+            self.debug_log("debug on")
+        else:
+            if self.debug_state:
+                self.debug_log("debug off")
+            self.debug_state = False
+            self.debug_file = sys.stderr
+
+    def debug_log(self, msg):
+        """Tool for logs."""
+        self.debug_file.write(time.strftime("%d/%m/%Y %H:%M:%S")
+                              + " : " + msg + "\n")
+
+    def position(self, args):
+        """UCI position command."""
+        if len(args) > 6 and args[0] == "fen":
+            self.board.set_fen(" ".join(args[1:7]))
+            self.engine.board.set_fen(" ".join(args[1:7]))
+        elif len(args) > 0 and args[0] == "startpos":
+            self.board.set_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNB"
+                               + "QKBNR w KQkq - 0 1")
+            self.engine.board.set_fen("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNB"
+                                      + "QKBNR w KQkq - 0 1")
+        else:
+            print("Bad command: position " + ' '.join(args))
+
+        if len(args) > 2 and args[1] == "moves":
+            print("moves")
+            for move in args[2:]:
+                try:
+                    self.board.push(chess.Move.from_uci(move))
+                    self.engine.board.push(chess.Move.from_uci(move))
+                except ValueError:
+                    print("Bad move: " + move + " for position command")
+        elif len(args) > 8 and args[7] == "moves":
+            print("moves")
+            for move in args[8:]:
+                try:
+                    self.engine.board.push(chess.Move.from_uci(move))
+                except ValueError:
+                    print("Bad move: " + move + " for position command")
+
+    def go(self, args):
+        if len(args) > 1 and args[0] == "depth":
+            print("eval", self.engine.evaluate(args[1]))
