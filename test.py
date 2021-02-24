@@ -29,6 +29,7 @@ def test(cmd, name):
         err_code -= 1
 
 
-test("test_engine.evaluate_uci(\"isready\")", "isready")
+test("uci = my_engine.UCI(test_engine)", "Create UCI")
+test("uci.evaluate_uci(\"isready\")", "isready")
 
 sys.exit(err_code)
