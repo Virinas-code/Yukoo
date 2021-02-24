@@ -1,29 +1,12 @@
 """Test file."""
-from multiprocessing import Process
-import time
+try:
+    import my_engine
+    print("✅ Import du module")
+except Exception as e:
+    print(f"❎ Import du module : {e}")
 
-p1 = Process()
-p2 = Process()
-
-
-def func1():
-    """Test function 1."""
-    for numb in range(10):
-        time.sleep(1)
-        print("text")
-        print(numb)
-
-
-def func2():
-    """Test function 2."""
-    inner = input()
-    print(inner)
-
-
-if __name__ == '__main__':
-    p1 = Process(target=func1)
-    print(p1)
-    p2 = Process(target=func2)
-    print(p2)
-    p1.start()
-    p2.start()
+try:
+    test_engine = my_engine.EngineBase("Test", "Yukoo test")
+    print("✅ EngineBase")
+except Exception as e:
+    print(f"❎ EngineBase : {e}")
