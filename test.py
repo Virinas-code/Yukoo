@@ -1,5 +1,5 @@
-from __future__ import print_function
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 """Test file."""
 import sys
 err_code = 0
