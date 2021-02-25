@@ -24,7 +24,8 @@ jobs:
       run: |
         unzip python-chess-0.23.11.zip -d python-chess
         cd python-chess/python-chess-0.23.11
-        python setup.py
+        python setup.py build
+        python setup.py install
         python --version
     - name: Test with test.py
       run: |
