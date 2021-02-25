@@ -18,7 +18,7 @@ PIECES_VALUES = {"p": PAWN_VALUE, "n": KNIGHT_VALUE, "b": BISHOP_VALUE,
 
 def printi(*args):
     """Debug mode printer."""
-    print("info string", *args)
+    print("info string", arg for arg in args)
 
 
 class EngineBase:
