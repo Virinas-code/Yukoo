@@ -41,7 +41,7 @@ class UCI:
         if inner[0] == "uci":
             self.uci()
         elif inner[0] == "debug" and len(inner) > 1:
-            self.debug(self.inner[1])
+            self.debug(inner[1])
         elif inner[0] == "quit":
             if self.debug_state:
                 self.debug_log("quit")
@@ -55,14 +55,14 @@ class UCI:
         elif inner[0] == "display-engine":
             print(self.engine.board)
         elif inner[0] == "position":
-            self.position(self.inner[1:])
+            self.position(inner[1:])
         elif inner[0] == "go":
-            self.go(self.inner[1:])
+            self.go(inner[1:])
         else:
-            print("Unknow command: " + " ".join(self.inner))
+            print("Unknow command: " + " ".join(inner))
             if self.debug_state:
                 self.debug_log("Unknow command: "
-                               + ' '.join(self.inner))
+                               + ' '.join(inner))
 
     def uci(self):
         """UCI uci command."""
