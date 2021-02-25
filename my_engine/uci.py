@@ -83,7 +83,7 @@ class UCI:
         if mode == "on":
             self.debug_state = True
             try:
-                self.debug_file = open("uci.log", 'x')
+                self.debug_file = open("uci.log", 'w')
             except FileExistsError:
                 self.debug_file = open("uci.log", 'w')
             self.debug_log("debug on")
