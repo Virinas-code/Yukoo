@@ -2,6 +2,7 @@
 #!/usr/bin/env python3
 """Test file."""
 import sys
+from __future__ import print_function
 err_code = 0
 
 try:
@@ -25,7 +26,7 @@ def test(cmd, name):
         exec(cmd, globals(), locals())
         print("✅", name)
     except Exception as exception:
-        print("❎", name, ":", exception)
+        print("❎" + name + ":", exception)
         err_code -= 1
 
 
