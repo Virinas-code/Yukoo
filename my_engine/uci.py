@@ -10,6 +10,11 @@ import sys
 import chess
 
 
+if not (sys.version_info > (3, 0)):
+    # Python 2 code in this block
+    FileExistsError = OSError
+
+
 class UCI:
     """MyEngine UCI System."""
 
