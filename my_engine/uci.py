@@ -29,7 +29,7 @@ class UCI:
     def run(self):
         """Run loop."""
         print(dir(chess.Piece(chess.PAWN, chess.BLACK)))
-        while self.inner[0] != "quit":
+        while self.inner != "quit":
             self.inner = input()
             self.evaluate_uci(self.inner)
         self.debug_file.close()
@@ -37,6 +37,7 @@ class UCI:
     def evaluate_uci(self, inner):
         """Evaluate UCI command."""
         inner = inner.split(" ")
+        print("info string", inner)
         if inner[0] == "uci":
             self.uci()
         elif inner[0] == "debug" and len(self.inner) > 1:
