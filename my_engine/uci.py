@@ -40,7 +40,7 @@ class UCI:
         print("info string", inner)
         if inner[0] == "uci":
             self.uci()
-        elif inner[0] == "debug" and len(self.inner) > 1:
+        elif inner[0] == "debug" and len(inner) > 1:
             self.debug(self.inner[1])
         elif inner[0] == "quit":
             if self.debug_state:
