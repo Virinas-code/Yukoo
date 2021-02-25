@@ -25,4 +25,4 @@ jobs:
         python -m pip install --upgrade chess ipython
     - name: Test with test
       run: |
-        python -m ipython test.py
+        python -m IPython test.py
