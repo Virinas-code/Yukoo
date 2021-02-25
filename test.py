@@ -39,4 +39,4 @@ test("uci = my_engine.UCI(test_engine);uci.evaluate_uci(\"debug off\")", "debug 
 
 
 
-# sys.exit(err_code)
+sys.exit(err_code)
