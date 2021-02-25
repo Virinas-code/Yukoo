@@ -1,8 +1,7 @@
+from __future__ import print_function
 # -*- coding: utf-8 -*-
-#!/usr/bin/env python3
 """Test file."""
 import sys
-from __future__ import print_function
 err_code = 0
 
 try:
