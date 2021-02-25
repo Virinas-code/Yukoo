@@ -22,9 +22,8 @@ jobs:
         python-version: 2.7
     - name: Install dependencies
       run: |
-        pwd
         git clone https://github.com/niklasf/python-chess.git
-        ls
+        cd python-chess
         python setup.py
         python --version
     - name: Test with test.py
