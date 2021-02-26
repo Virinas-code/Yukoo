@@ -49,6 +49,7 @@ class EngineBase:
 
         if depth != 1:
             best_evaluation = (0-float('inf')) if board.turn == chess.WHITE else (float('inf'))
+            printi("best evaluation", best_evaluation)
             for move in board.generate_legal_moves():
                 test = chess.Board(fen=board.fen())
                 test.push(move)
