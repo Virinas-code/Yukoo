@@ -59,7 +59,7 @@ class EngineBase:
                     # printi("board\n", test)
                     evaluation = self.evaluate(depth-1, board=test)
                     # printi("evaluation", evaluation)
-                    best_evaluation = max(evaluation, best_evaluation) if test.turn == chess.WHITE else min(evaluation, vest)
+                    best_evaluation = max(evaluation, best_evaluation) if test.turn == chess.WHITE else min(evaluation, bestEvaluation)
                     # printi("best evaluation", bestEvaluation)
                     transpos.append(hsh)
                 else:
