@@ -48,7 +48,10 @@ class EngineBase:
                     black_score += PIECES_VALUES[piece.symbol()]
 
         if depth != 1:
-            best_evaluation = (0-float('inf')) if board.turn == chess.WHITE else (float('inf'))
+            if board.turn == chess.WHITE:
+                best_evaluation = 0-float('inf')
+            else:
+                best_evaluation = float('inf')
             printi("best evaluation", best_evaluation)
             for move in board.generate_legal_moves():
                 test = chess.Board(fen=board.fen())
