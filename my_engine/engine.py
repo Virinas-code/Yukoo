@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-from __future__ import print_function
 """
 MyEngine Engine base.
 
 Base engine
 """
+from __future__ import print_function
 import chess
+import chess.polyglot
 
 PAWN_VALUE = 100
 KNIGHT_VALUE = 300
@@ -35,6 +36,7 @@ class EngineBase:
         if board is None:
             board = self.board
         depth = int(depth)
+        print(board)
         # printi(board.piece_map())
         transpos = list()
         white_score = 0
@@ -49,14 +51,16 @@ class EngineBase:
 
         if depth != 1:
             if board.turn == chess.WHITE:
-                best_evaluation = 0-float('inf')
-            else:
                 best_evaluation = float('inf')
+            else:
+                best_evaluation = 0-float('inf')
+            print("color", board.turn)
             printi("best evaluation", best_evaluation)
             for move in board.generate_legal_moves():
                 test = chess.Board(fen=board.fen())
                 test.push(move)
-                hsh = hash(test.fen())
+                # hsh = chess.polyglot.zobrist_hash(test)
+                # print(hsh)
                 if hsh not in transpos:
                     if test.board_fen() == "3Q3k/8/8/8/8/8/8/7K":
                         printi("yes!")
