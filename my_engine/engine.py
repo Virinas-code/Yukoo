@@ -31,14 +31,8 @@ class EngineBase:
         self.author = author
         self.board = board
 
-    def evaluate(self, depth, board=None):
+    def evaluate(self, board):
         """Evaluate position."""
-        if board is None:
-            board = self.board
-        depth = int(depth)
-        print(board)
-        # printi(board.piece_map())
-        transpos = list()
         white_score = 0
         black_score = 0
         for piece in board.piece_map().values():
@@ -49,28 +43,4 @@ class EngineBase:
                 if piece.symbol() in PIECES_VALUES.keys():
                     black_score += PIECES_VALUES[piece.symbol()]
 
-        if depth != 1:
-            if board.turn == chess.WHITE:
-                best_evaluation = float('inf')
-            else:
-                best_evaluation = 0-float('inf')
-            print("color", board.turn)
-            printi("best evaluation", best_evaluation)
-            for move in board.generate_legal_moves():
-                test = chess.Board(fen=board.fen())
-                test.push(move)
-                # hsh = chess.polyglot.zobrist_hash(test)
-                # print(hsh)
-                if hsh not in transpos:
-                    if test.board_fen() == "3Q3k/8/8/8/8/8/8/7K":
-                        printi("yes!")
-                    # printi("board\n", test)
-                    evaluation = self.evaluate(depth-1, board=test)
-                    # printi("evaluation", evaluation)
-                    best_evaluation = max(evaluation, best_evaluation) if test.turn == chess.WHITE else min(evaluation, best_evaluation)
-                    # printi("best evaluation", bestEvaluation)
-                    transpos.append(hsh)
-                else:
-                    printi("transpos", test.fen(), "move", move)
-            return best_evaluation
         return white_score-black_score
