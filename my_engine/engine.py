@@ -50,3 +50,17 @@ class EngineBase:
         depth = int(depth)
         if depth == 1:
             return self.evaluate(board)
+        else:
+            moves_to_get = list()
+            eval = -float("inf") if board.turn == chess.BLACK else float('inf')
+            for move in board.legal_moves:
+                printi("move", move)
+                test = chess.Board(fen=board.fen())
+                moves_to_get.append(move)
+                print(test)
+                score = self.evaluate(test)
+                if board.turn == chess.WHITE:
+                    eval = max(score, eval)
+                else:
+                    eval = min(score, eval)
+            return eval
