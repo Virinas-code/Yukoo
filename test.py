@@ -6,16 +6,16 @@ err_code = 0
 
 try:
     import my_engine
-    print("✅ Import du module")
+    print("\033[32mImport du module\033[0m")
 except Exception as exception:
-    print("❎ Import du module :", exception)
+    print("\033[31mImport du module :", exception, "\033[0m")
     err_code -= 1
 
 try:
     test_engine = my_engine.EngineBase("Test", "Yukoo test")
-    print("✅ EngineBase")
+    print("\033[32mEngineBase\033[0m")
 except Exception as exception:
-    print("❎ EngineBase :", exception)
+    print("\033[31mEngineBase :", exception, "\033[0m")
     err_code -= 1
 
 
@@ -23,9 +23,9 @@ def test(cmd, name):
     global err_code
     try:
         exec(cmd, globals(), locals())
-        print("✅", name)
+        print("\033[32m", name, "\033[0m")
     except Exception as exception:
-        print("❎" + name + ":", exception)
+        print("\033[31m" + name + ":", exception, "\033[0m")
         err_code -= 1
 
 
