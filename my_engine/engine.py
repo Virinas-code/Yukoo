@@ -44,3 +44,9 @@ class EngineBase:
                     black_score += PIECES_VALUES[piece.symbol()]
 
         return white_score-black_score
+
+    def search(self, depth, board):
+        """Search best move"""
+        depth = int(depth)
+        if depth == 1:
+            return self.evaluate(board)
