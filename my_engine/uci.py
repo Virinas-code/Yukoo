@@ -129,4 +129,4 @@ class UCI:
 
     def go(self, args):
         if len(args) > 1 and args[0] == "depth":
-            print("eval", self.engine.search(args[1]))
+            print("eval", self.engine.search(args[1], self.board))
