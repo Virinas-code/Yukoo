@@ -57,6 +57,7 @@ class EngineBase:
                 printi("move", move)
                 test = chess.Board(fen=board.fen())
                 moves_to_get.append(move)
+                test.push(move)
                 print(test)
                 score = self.evaluate(test)
                 if board.turn == chess.WHITE:
