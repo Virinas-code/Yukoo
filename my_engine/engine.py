@@ -46,8 +46,24 @@ class EngineBase:
         return white_score-black_score
 
     def search(self, depth, board):
-        """Search best move"""
-        depth = int(depth)
+        """Search best move (Minimax from wikipedia)."""
+
+    def minimax(self, board, depth, maximimize_white):
+        """Minimax algorithm from Wikipedia."""
+        if depth == 0 or board.is_game_over():
+            return self.evaluate(board)
+        if maximimize_white:
+            value = -float('inf')
+            for move in board.legal_moves:
+                value = max(value, self.minimax(chess.Board(fen=board.fen()).push(move), depth-1, False))
+            return value
+        else:
+            # minimizing white
+            value = float('inf')
+            for move in board.legal_moves:
+                value = min(value, self.minimax(chess.Board(fen=board.fen()).push(move), depth-1, True))
+            return value
+        """depth = int(depth)
         if depth == 1:
             return self.evaluate(board)
         else:
@@ -64,4 +80,4 @@ class EngineBase:
                     eval = max(score, eval)
                 else:
                     eval = min(score, eval)
-            return eval
+            return eval"""
