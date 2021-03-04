@@ -55,13 +55,17 @@ class EngineBase:
         if maximimize_white:
             value = -float('inf')
             for move in board.legal_moves:
-                value = max(value, self.minimax(chess.Board(fen=board.fen()).push(move), depth-1, False))
+                e = chess.Board(fen=board.fen())
+                e.push(move)
+                value = max(value, self.minimax(e, depth-1, False))
             return value
         else:
             # minimizing white
             value = float('inf')
             for move in board.legal_moves:
-                value = min(value, self.minimax(chess.Board(fen=board.fen()).push(move), depth-1, True))
+                e = chess.Board(fen=board.fen())
+                e.push(move)
+                value = min(value, self.minimax(e, depth-1, True))
             return value
         """depth = int(depth)
         if depth == 1:
