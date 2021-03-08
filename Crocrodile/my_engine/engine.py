@@ -74,7 +74,10 @@ class EngineBase:
             for move in board.legal_moves:
                 e = chess.Board(fen=board.fen())
                 e.push(move)
-                value = min(value, self.minimax(e, depth-1, True))
+                evaluation = self.minimax(e, depth-1, True)[0]
+                if value > evaluation:
+                    value = evaluation
+                    best_move = move
             return value, best_move
         """depth = int(depth)
         if depth == 1:
