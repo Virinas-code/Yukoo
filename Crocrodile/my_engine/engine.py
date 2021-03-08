@@ -37,6 +37,8 @@ class EngineBase:
         white_score = 0
         black_score = 0
         piece_map = board.piece_map()
+        if piece_map.count() <= 7:
+            print("tbhit")
         for piece in piece_map:
             if piece_map[piece].symbol().isupper():
                 white_score += PIECES_VALUES[piece_map[piece].symbol().lower()]
