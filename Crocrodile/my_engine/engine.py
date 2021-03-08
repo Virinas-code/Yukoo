@@ -51,7 +51,7 @@ class EngineBase:
     def minimax(self, board, depth, maximimize_white):
         """Minimax algorithm from Wikipedia."""
         if depth == 0 or board.is_game_over():
-            return self.evaluate(board)
+            return self.evaluate(board), chess.Move.from_uci("0000")
         if maximimize_white:
             value = -float('inf')
             for move in board.legal_moves:
@@ -60,7 +60,7 @@ class EngineBase:
             for move in board.legal_moves:
                 e = chess.Board(fen=board.fen())
                 e.push(move)
-                evaluation = self.minimax(e, depth-1, False)[1]
+                evaluation = self.minimax(e, depth-1, False)[0]
                 if value < evaluation:
                     value = evaluation
                     best_move = move
@@ -74,7 +74,7 @@ class EngineBase:
             for move in board.legal_moves:
                 e = chess.Board(fen=board.fen())
                 e.push(move)
-                value = min(value, self.minimax(e, depth-1, True)[1])
+                value = min(value, self.minimax(e, depth-1, True))
             return value, best_move
         """depth = int(depth)
         if depth == 1:
