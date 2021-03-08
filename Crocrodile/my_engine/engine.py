@@ -14,7 +14,7 @@ BISHOP_VALUE = 300
 ROOK_VALUE = 500
 QUEEN_VALUE = 900
 PIECES_VALUES = {"p": PAWN_VALUE, "n": KNIGHT_VALUE, "b": BISHOP_VALUE,
-                 "r": ROOK_VALUE, "q": QUEEN_VALUE}
+                 "r": ROOK_VALUE, "q": QUEEN_VALUE, "k": 0}
 
 
 def printi(*args):
@@ -35,13 +35,12 @@ class EngineBase:
         """Evaluate position."""
         white_score = 0
         black_score = 0
-        for piece in board.piece_map().values():
-            if piece.symbol().isupper():
-                if piece.symbol().lower() in PIECES_VALUES.keys():
-                    white_score += PIECES_VALUES[piece.symbol().lower()]
+        piece_map = board.piece_map()
+        for piece in piece_map:
+            if piece_map[piece].symbol().isupper():
+                white_score += PIECES_VALUES[piece_map[piece].symbol().lower()]
             else:
-                if piece.symbol() in PIECES_VALUES.keys():
-                    black_score += PIECES_VALUES[piece.symbol()]
+                black_score += PIECES_VALUES[piece_map[piece].symbol()]
 
         return white_score-black_score
 
