@@ -13,8 +13,9 @@ KNIGHT_VALUE = 300
 BISHOP_VALUE = 300
 ROOK_VALUE = 500
 QUEEN_VALUE = 900
+KING_VALUE = 0  # Infinity is too complex
 PIECES_VALUES = {"p": PAWN_VALUE, "n": KNIGHT_VALUE, "b": BISHOP_VALUE,
-                 "r": ROOK_VALUE, "q": QUEEN_VALUE, "k": 0}
+                 "r": ROOK_VALUE, "q": QUEEN_VALUE, "k": KING_VALUE}
 
 
 def printi(*args):
