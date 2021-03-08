@@ -7,6 +7,7 @@ Base engine
 from __future__ import print_function
 import chess
 import chess.polyglot
+import requests
 
 PAWN_VALUE = 100
 KNIGHT_VALUE = 300
