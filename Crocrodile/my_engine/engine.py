@@ -37,9 +37,14 @@ class EngineBase:
         """Evaluate position."""
         white_score = 0
         black_score = 0
+        if board.is_checkmate():
+            if board.turn == chess.WHITE:
+                return -10000
+            else:
+                return 10000
         piece_map = board.piece_map()
-        if piece_map.count() <= 7:
-            print("tbhit")
+        if len(piece_map) <= 7:
+            return float("inf")
         for piece in piece_map:
             if piece_map[piece].symbol().isupper():
                 white_score += PIECES_VALUES[piece_map[piece].symbol().lower()]
@@ -51,10 +56,26 @@ class EngineBase:
     def search(self, depth, board):
         """Search best move (Minimax from wikipedia)."""
 
-    def minimax(self, board, depth, maximimize_white):
+    def minimax(self, board, depth, maximimize_white, subcall):
         """Minimax algorithm from Wikipedia."""
         if depth == 0 or board.is_game_over():
-            return self.evaluate(board), chess.Move.from_uci("0000")
+            evaluation = self.evaluate(board)
+            if evaluation == float("inf"):
+                r = requests.get("http://tablebase.lichess.ovh/standard?fen={0}".format(board.fen().replace(" ", "_"))).json()
+                dtm = r["moves"][0]["dtm"]
+                if board.turn == chess.WHITE:
+                    if dtm > 0:
+                        mate_in = -10000 + dtm
+                    else:
+                        mate_in = 10000 - dtm
+                else:
+                    if dtm > 0:
+                        mate_in = 10000 - dtm
+                    else:
+                        mate_in = -10000 + dtm
+                return mate_in, r["moves"][0]["uci"]
+                # color will be mated in...
+            return evaluation, chess.Move.from_uci("0000")
         if maximimize_white:
             value = -float('inf')
             for move in board.legal_moves:
@@ -63,11 +84,15 @@ class EngineBase:
             for move in board.legal_moves:
                 e = chess.Board(fen=board.fen())
                 e.push(move)
-                evaluation = self.minimax(e, depth-1, False)[0]
+                evaluation = self.minimax(e, depth-1, False, True)[0]
                 if value < evaluation:
                     value = evaluation
                     best_move = move
-            return value, best_move
+            if subcall:
+                return value, best_move
+            else:
+                print("info depth {0} score {1}".format(depth, value))
+                print("bestmove {0}".format(best_move.uci()))
         else:
             # minimizing white
             value = float('inf')
@@ -77,11 +102,15 @@ class EngineBase:
             for move in board.legal_moves:
                 e = chess.Board(fen=board.fen())
                 e.push(move)
-                evaluation = self.minimax(e, depth-1, True)[0]
+                evaluation = self.minimax(e, depth-1, True, True)[0]
                 if value > evaluation:
                     value = evaluation
                     best_move = move
-            return value, best_move
+            if subcall:
+                return value, best_move
+            else:
+                print("info depth {0} score {1}".format(depth, value))
+                print("bestmove {0}".format(best_move.uci()))
         """depth = int(depth)
         if depth == 1:
             return self.evaluate(board)
